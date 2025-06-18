@@ -199,34 +199,39 @@
         }
 
         function displayForecast(data) {
-            dailyForecastDiv.innerHTML = ''; 
+            dailyForecastDiv.innerHTML = '';
 
-            const dailyData = {}; 
+            const dailyData = {};
+            const today = new Date();
+            const todayKey = today.toISOString().split('T')[0];
+
             data.list.forEach(item => {
                 const date = new Date(item.dt * 1000);
-                const dayKey = date.toISOString().split('T')[0]; 
+                const dayKey = date.toISOString().split('T')[0];
 
-                if (!dailyData[dayKey]) {
-                    dailyData[dayKey] = {
-                        temps: [],
-                        descriptions: new Set(),
-                        pop: 0,
-                        rain: 0, 
-                        date: date,
-                        rainTimings: [] 
-                    };
-                }
+                if (dayKey !== todayKey) {
+                    if (!dailyData[dayKey]) {
+                        dailyData[dayKey] = {
+                            temps: [],
+                            descriptions: new Set(),
+                            pop: 0,
+                            rain: 0,
+                            date: date,
+                            rainTimings: []
+                        };
+                    }
 
-                dailyData[dayKey].temps.push(item.main.temp);
-                dailyData[dayKey].descriptions.add(item.weather[0].description);
-                dailyData[dayKey].pop = Math.max(dailyData[dayKey].pop, item.pop || 0);
+                    dailyData[dayKey].temps.push(item.main.temp);
+                    dailyData[dayKey].descriptions.add(item.weather[0].description);
+                    dailyData[dayKey].pop = Math.max(dailyData[dayKey].pop, item.pop || 0);
 
-                if (item.rain && item.rain['3h']) {
-                    dailyData[dayKey].rain += item.rain['3h'];
-                }
+                    if (item.rain && item.rain['3h']) {
+                        dailyData[dayKey].rain += item.rain['3h'];
+                    }
 
-                if (item.weather && item.weather.length > 0 && item.weather[0].main === 'Rain') {
-                    dailyData[dayKey].rainTimings.push(date);
+                    if (item.weather && item.weather.length > 0 && item.weather[0].main === 'Rain') {
+                        dailyData[dayKey].rainTimings.push(date);
+                    }
                 }
             });
 
@@ -250,7 +255,7 @@
 
                 const isRainInTimeRange = (timings, startHour, endHour) => {
                     return timings.some(t => {
-                        const localHour = t.getHours(); 
+                        const localHour = t.getHours();
                         return localHour >= startHour && localHour < endHour;
                     });
                 };
@@ -261,11 +266,11 @@
                     const daylightBlocksWithRain = [6, 9, 12, 15, 18, 21].filter(hour =>
                         isRainInTimeRange(rainTimings, hour, hour + 3)
                     ).length;
-                    return daylightBlocksWithRain >= 4; 
+                    return daylightBlocksWithRain >= 4;
                 };
 
-                const isMorningRain = isRainInTimeRange(rainTimings, 6, 13); 
-                const isEveningRain = isRainInTimeRange(rainTimings, 16, 20); 
+                const isMorningRain = isRainInTimeRange(rainTimings, 6, 13);
+                const isEveningRain = isRainInTimeRange(rainTimings, 16, 20);
                 const isNightRainOnly = hasAnyRain && rainTimings.every(t => {
                     const localHour = t.getHours();
                     return (localHour >= 21 || localHour < 5);
@@ -274,15 +279,15 @@
                 if (isRainAllDay()) {
                     activitySuggestion = 'Rainy Day!';
                     activityIcon = '☔';
-                } else if (isMorningRain && !isEveningRain) { 
+                } else if (isMorningRain && !isEveningRain) {
                     activitySuggestion = 'Little morning showers';
                     activityIcon = '💧';
-                } else if (isEveningRain && !isMorningRain) { 
+                } else if (isEveningRain && !isMorningRain) {
                     activitySuggestion = 'Lovely for a Dinner Date!';
                     activityIcon = '🍽️';
                 } else if (isNightRainOnly) {
                     activitySuggestion = 'Night rain – undisturbed day!';
-                    activityIcon = '😴';
+                    activityIcon = '�';
                 } else if (!hasAnyRain) {
                     activitySuggestion = 'No rain expected';
                     activityIcon = '😞';
