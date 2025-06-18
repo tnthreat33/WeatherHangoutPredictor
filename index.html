@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R&R Scheduler</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -319,7 +318,7 @@
             const MAX_RAIN_FOR_100_PERCENT = 20; 
 
             let chanceFromPop = pop * 100;
-            let chanceFromRain = Math.min((rainAmount / MAX_RAIN_FOR_100_PERCENT) * 100, 100); // Cap at 100%
+            let chanceFromRain = Math.min((rainAmount / MAX_RAIN_FOR_100_PERCENT) * 100, 100); 
             let combinedChance = (chanceFromPop + chanceFromRain) / 2;
 
             return Math.min(Math.max(combinedChance, 0), 100).toFixed(0);
