@@ -156,7 +156,7 @@
             const next24HoursForecast = forecastList.filter(item => {
                 const itemDate = new Date(item.dt * 1000);
                 return itemDate.getTime() > now.getTime();
-            }).slice(0, 8); 
+            }).slice(0, 7); 
 
             if (next24HoursForecast.length > 0) {
                 next24HoursForecast.forEach(item => {
