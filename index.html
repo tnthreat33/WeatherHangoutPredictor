@@ -123,7 +123,7 @@
                 }
                 const currentHangoutChance = calculateHangoutChance(currentPop, currentRainAmount);
 
-                displayCurrentWeather(currentWeatherData, currentHangoutChance);
+                displayCurrentWeather(currentWeatherData, currentHangoutChance, forecastData.list);
                 displayForecast(forecastData);
 
                 cityNameDisplay.textContent = `${forecastData.city.name}, ${forecastData.city.country}`;
