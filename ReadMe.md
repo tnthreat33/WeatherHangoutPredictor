@@ -1,10 +1,10 @@
-Weather Hangout Predictor
+#Weather Hangout Predictor
 
-Project Overview
+##Project Overview
 The Weather Hangout Predictor is a static web application designed to help predict time to hangout with farmers. It fetches real-time and forecasted weather data for a given city and, based on precipitation predictions, calculates a "Hangout Chance" percentage. The core idea is that more rain means less farming work, thus a higher likelihood of free time for social activities. 
 
 
-Features
+##Features
 Current Weather Display: Shows real-time temperature, conditions, humidity, and wind speed for the selected city.
 
 "Hangout Chance" Calculation: Dynamically calculates a percentage chance of getting to hang out based on the probability and volume of precipitation in the forecast.
@@ -17,37 +17,37 @@ Responsive Design: Styled with Tailwind CSS to ensure a clean and adaptive user 
 
 Emoji-Rich Interface: Uses intuitive emojis to visually represent weather and activity suggestions.
 
-Technologies Used
-Frontend:
+##Technologies Used
+###Frontend:
 
-HTML5
+-HTML5
 
-CSS3 (via Tailwind CSS CDN)
+-CSS3 (via Tailwind CSS CDN)
 
-JavaScript (Vanilla JS)
+-JavaScript (Vanilla JS)
 
-Backend (for API Proxy):
+-Backend (for API Proxy):
 
-Node.js (for Serverless Function)
+-Node.js (for Serverless Function)
 
-APIs:
+###APIs:
 
-OpenWeatherMap API (5-day/3-hour forecast & Current Weather)
+-OpenWeatherMap API (5-day/3-hour forecast & Current Weather)
 
-Deployment:
+###Deployment:
 
-Vercel (for static site hosting and serverless functions)
+-Vercel (for static site hosting and serverless functions)
 
-Setup & Local Development
+##Setup & Local Development
 To run this application locally, you'll need Node.js installed on your machine.
 
-Clone the Repository:
+-Clone the Repository:
 
 git clone https://github.com/YourUsername/WeatherHangoutPredictor.git
 cd WeatherHangoutPredictor 
 
 
-Create Serverless Function File:
+-Create Serverless Function File:
 Ensure you have an api directory in your project root, and inside it, a file named weather.js with the content for the serverless function.
 
 WeatherHangoutPredictor/
@@ -56,15 +56,15 @@ WeatherHangoutPredictor/
     └── weather.js
 
 
-Set Up OpenWeather API Key:
+-Set Up OpenWeather API Key:
 You will need an API key from OpenWeather. Sign up for a free account at https://openweathermap.org/api.
 
 
-Deployment
+##Deployment
 This application is deployed on Vercel- https://weather-hangout-preditor.vercel.app/
 
 
-Usage
+##Usage
 Open the deployed application in your browser.
 
 The application will initially load the weather for "North Manchester."
@@ -73,7 +73,7 @@ Enter a different city name in the input field and click "Get Weather" to view i
 
 Observe the current weather, daily forecast, "Hangout Chance" percentage, and suggested activities.
 
-Future Improvements
+##Future Improvements
 Hourly Data for Day: Add a feature to show the hourly changes for the current day allowing for better details.
 
 More Granular Activity Logic: Refine activity suggestions with more complex logic based on multiple weather parameters (e.g., wind, temperature ranges).
