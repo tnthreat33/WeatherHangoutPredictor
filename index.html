@@ -40,6 +40,12 @@
                     <p>Wind Speed: <span id="currentWind" class="font-bold"></span> mph</p>
                     <p>Radar:<a href="https://weather.com/weather/radar/interactive/l/fad981f77e090d13a37cc674630c94a8193dbf5d6cb58e4082678818d9628314" target="_blank" class="text-emerald-600 hover:underline">🗺️</a> </p>
                 </div>
+                <div id="hourlyRainForecast" class="mt-4 text-emerald-700">
+                    <h4 class="text-xl font-semibold mb-2">Hourly Rain Chance (Next 24h):</h4>
+                    <div id="hourlyRainDetails" class="flex flex-wrap gap-x-4 gap-y-2 text-lg">
+                        <!-- Hourly rain percentages will be injected here -->
+                    </div>
+                </div>
             </div>
 
             <!-- Daily Forecast Section -->
@@ -132,13 +138,36 @@
             }
         }
 
-        function displayCurrentWeather(data, hangoutChance) {
+        function displayCurrentWeather(data, hangoutChance, forecastList) {
             currentTemp.textContent = data.main.temp.toFixed(1);
             currentCondition.textContent = data.weather[0].description;
             currentHumidity.textContent = data.main.humidity;
             currentWind.textContent = data.wind.speed.toFixed(1);
-            currentHangoutChanceSpan.textContent = hangoutChance; 
+            currentHangoutChanceSpan.textContent = hangoutChance;
             currentWeatherSection.classList.remove('hidden');
+
+            hourlyRainDetailsDiv.innerHTML = ''; 
+            const now = new Date();
+            let hourlyHtml = '';
+
+            const next24HoursForecast = forecastList.filter(item => {
+                const itemDate = new Date(item.dt * 1000);
+                return itemDate.getTime() > now.getTime();
+            }).slice(0, 8); 
+
+            if (next24HoursForecast.length > 0) {
+                next24HoursForecast.forEach(item => {
+                    const itemDate = new Date(item.dt * 1000);
+                    const timeOptions = { hour: 'numeric', hour12: true };
+                    const formattedTime = itemDate.toLocaleTimeString('en-US', timeOptions);
+                    const pop = (item.pop * 100).toFixed(0);
+
+                    hourlyHtml += `<span class="whitespace-nowrap">${formattedTime}: ${pop}%</span>`;
+                });
+            } else {
+                hourlyHtml = 'No detailed hourly rain forecast available for the next 24 hours.';
+            }
+            hourlyRainDetailsDiv.innerHTML = hourlyHtml;
         }
 
         function displayForecast(data) {
